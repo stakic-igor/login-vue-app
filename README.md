@@ -22,3 +22,9 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+### Login api
+See [reqres.in](https://reqres.in/)
+
+Email that must be used is: eve.holt@reqres.in
