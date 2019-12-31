@@ -52,6 +52,7 @@
 </template>
 
 <script>
+
 export default {
     name: 'Login',
     data: () => ({
@@ -97,4 +98,5 @@ export default {
             });
         }}
     }
+
 </script>

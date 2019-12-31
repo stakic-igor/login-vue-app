@@ -8,9 +8,9 @@ import NotFound from './components/NotFound';
 Vue.use(VueRouter);
 
 const routes = [
-     {path: '/', component: Login},
-     {path: '/welcome', component: Welcome},
-     {path: '*', component: NotFound}
+    { path: '/', component: Login },
+    { path: '/welcome', component: Welcome },
+    { path: '*', component: NotFound }
 ]
 
 const router = new VueRouter({
@@ -21,7 +21,7 @@ const router = new VueRouter({
 Vue.config.productionTip = false
 
 new Vue({
-  vuetify,
-  router,
-  render: h => h(App)
+    vuetify,
+    router,
+    render: h => h(App)
 }).$mount('#app')
