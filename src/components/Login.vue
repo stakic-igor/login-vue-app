@@ -1,53 +1,50 @@
 <template>
     <v-container>
-        <v-row>
-            <v-col cols="12">
-                <v-row
-                class="grey lighten-5"
-                style="height: 300px;"
-                >
-                <v-form
-                    ref="form"
-                    v-model="valid"
-                    lazy-validation
-                >
-                    <v-text-field
-                        v-model="email"
-                        :rules="emailRules"
-                        label="E-mail"
-                        required
-                    ></v-text-field>
-                    <v-text-field
-                        v-model="password"
-                        :counter="1"
-                        :rules="passwordRules"
-                        label="Password"
-                        required
-                    ></v-text-field>
-                    <v-checkbox
-                        v-model="checkbox"
-                        label="Remember me"
-                    ></v-checkbox>
+        <v-layout row justify-center>
+           <v-flex xs2>
 
-                    <v-btn
-                        :disabled="!valid"
-                        color="success"
-                        class="mr-4"
-                        @click="submit"
+                    <v-form
+                        ref="form"
+                        v-model="valid"
+                        lazy-validation
                     >
-                    Log In
-                    </v-btn>
-                    <v-btn
-                        color="error"
-                        class="mr-4"
-                        @click="reset"
-                    >
-                    Reset
-                    </v-btn>
-                </v-form>
-                </v-row>
-            </v-col>
-        </v-row>
+                        <div v-if="isLoading">Loading, please wait....</div>
+                        <v-text-field
+                            v-model="email"
+                            :rules="emailRules"
+                            label="E-mail"
+                            required
+                        ></v-text-field>
+                        <v-text-field
+                            v-model="password"
+                            :counter="1"
+                            :rules="passwordRules"
+                            label="Password"
+                            required
+                        ></v-text-field>
+                        <v-checkbox
+                            v-model="checkbox"
+                            label="Remember me"
+                        ></v-checkbox>
+
+                        <v-btn
+                            :disabled="!valid"
+                            color="success"
+                            class="mr-4"
+                            @click="submit"
+                        >
+                        Log In
+                        </v-btn>
+                        <v-btn
+                            color="error"
+                            class="mr-4"
+                            @click="reset"
+                        >
+                        Reset
+                        </v-btn>
+                    </v-form>
+           </v-flex>
+        </v-layout>
     </v-container>
 </template>
 
@@ -59,6 +56,7 @@ export default {
         checkbox: true,
         valid: true,
         password: '',
+        isLoading: false,
         passwordRules: [
             v => !!v || 'Password is required',
             v => (v && v.length >= 1) || 'Password must be longer than 1 character',
@@ -91,8 +89,14 @@ export default {
                     password: 'blabal',
                 })
             })
-            .then( response => response.json())
-            .then(data => document.cookie = n + '=' + data.token)
+            .then( response => {
+                response.json()
+                //this.isLoading = true;
+            })
+            .then(data => {
+                document.cookie = n + '=' + data.token;
+                //this.isLoading = false;
+                })
             .catch(function (error) {
                 alert('Request failure: ', error);
             });
