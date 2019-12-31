@@ -3,8 +3,6 @@
         <v-row>
             <v-col cols="12">
                 <v-row
-                :align="alignment"
-                :justify="justify"
                 class="grey lighten-5"
                 style="height: 300px;"
                 >
@@ -29,7 +27,6 @@
                     <v-checkbox
                         v-model="checkbox"
                         label="Remember me"
-                        :checked="checked"
                     ></v-checkbox>
 
                     <v-btn
@@ -79,21 +76,22 @@ export default {
             this.$refs.form.resetValidation()
         },
         submit() {
-            
-            fetch('https://reqres.in/api/login', {
-            method: 'POST',
-            headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                email: "eve.holt@reqres.in",
-                password: "cityslicka"
+
+            let n = 'x-auth-token';
+            let url = 'https://reqres.in/api/login';
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: this.email,
+                    password: 'blabal',
                 })
             })
-            .then(function (data) {
-                alert('Request success: ', data);
-            })
+            .then( response => response.json())
+            .then(data => document.cookie = n + '=' + data.token)
             .catch(function (error) {
                 alert('Request failure: ', error);
             });
