@@ -10,7 +10,12 @@
 
 export default {
 
-  name: 'App',
+    name: 'App',
 
+methods: {
+      submit(value) {
+          alert(value) // someValue
+      }
+  }
 };
 </script>
