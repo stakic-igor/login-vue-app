@@ -2,7 +2,6 @@
     <v-container>
         <v-layout row justify-center>
            <v-flex xs4>
-
                     <v-form
                         ref="form"
                         v-model="valid"
@@ -14,7 +13,7 @@
                             :rules="emailRules"
                             label="E-mail"
                             required
-                            :disabled="t ? true : false"
+                            :disabled="disableField"
                         ></v-text-field>
                         <v-text-field
                             v-model="password"
@@ -23,25 +22,24 @@
                             label="Password"
                             required
                             type="password"
-                            :disabled="t ? true : false"
+                            :disabled="disableField"
                         ></v-text-field>
                         <v-checkbox
                             v-model="checkbox"
                             label="Remember me"
-                            @change="check($event)"
                         ></v-checkbox>
 
                         <v-btn
                             :disabled='!isComplete'
                             color="success"
-                            class="mr-4"
-                            @click="submit"
+                            class="mr-6"
+                            @click="onSubmit"
                         >
                         Log In
                         </v-btn>
                         <v-btn
                             color="error"
-                            class="mr-4"
+                            class="mr-6"
                             @click="reset"
                         >
                         Reset
@@ -62,7 +60,7 @@ export default {
         }
     },
     data: () => ({
-        t: false,
+        disableField: false,
         checkbox: true,
         valid: true,
         password: '',
@@ -79,9 +77,6 @@ export default {
         ],
     }),
     methods: {
-        check() {
-            alert('checked')
-        },
         reset() {
             //this.$refs.form.reset()
             this.email = '';
@@ -89,10 +84,10 @@ export default {
             this.isLoading = false;
             this.$refs.form.resetValidation();
         },
-        submit() {
-            this.t = true;
+        onSubmit() {
+            this.disableField = true;
             this.isLoading = true;
-            let n = 'x-auth-token';
+            let tokenName = 'x-auth-token';
             let url = 'https://reqres.in/api/login';
             fetch(url, {
                 method: 'POST',
@@ -109,18 +104,24 @@ export default {
                 this.isLoading = true;
                 this.loadingText = "Loading, please wait..."
                 if(response.status === 200 ) {
+                    this.$store.dispatch('setEmail',{email: this.email})
+                    this.$store.dispatch('authUser',{isAutenticated: true})
+                    window.localStorage.setItem('saveEmail', this.email)
+                    window.localStorage.setItem('authUser', true)
+                    this.$router.replace('welcome');
                     return  response.json()
                 } else {
                     this.reset();
-                    this.t = false;
+                    this.disableField = false;
                     this.isLoading = true;
                     this.loadingText = "Wrong user name or password! Please try again."
                 }
             })
             .then(data => {
-                this.$store.dispatch('setEmail',{email: this.email})
-                document.cookie = n + '=' + data.token;
-                this.$router.push('welcome');
+                let now = new Date();
+                now.setTime(now.getTime() + 1 * 3600 * 1000);
+                document.cookie = tokenName + '=' + data.token + "; expires="+ now.toUTCString() + "; path=/";
+
                 this.isLoading = false;
             })
         }

@@ -1,7 +1,7 @@
 
 <template>
     <div>
-        <h1>Hello {{ email }}, welcome! </h1>
+        <h1>Hello {{ userEmail }}, welcome!</h1>
     <div>
         <span @click="logout">Logout </span>
     </div>
@@ -10,26 +10,20 @@
 
 <script>
 
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
     name: 'Welcome',
 
     computed: {
-        ...mapState(['email']),
-    },
-    mounted: {
-        myFnc() {
-            alert(this.email)
-        }
+        ...mapGetters(['userEmail'])
     },
     methods: {
         logout() {
-            alert('logout')
+            window.localStorage.clear()
+            this.$router.replace('login');
+            this.$tore.dispatch('logout', {isAutenticated: false})
         }
-        // myFnc() {
-        //     alert(this.email)
-        // }
     }
 }
 </script>
