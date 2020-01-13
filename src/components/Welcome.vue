@@ -2,6 +2,9 @@
 <template>
     <div>
         <h1>Hello {{ email }}, welcome! </h1>
+    <div>
+        <span @click="logout">Logout </span>
+    </div>
     </div>
 </template>
 
@@ -21,6 +24,9 @@ export default {
         }
     },
     methods: {
+        logout() {
+            alert('logout')
+        }
         // myFnc() {
         //     alert(this.email)
         // }
