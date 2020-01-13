@@ -18,32 +18,28 @@ export const store =  new Vuex.Store({
             state.userData.email = event.email;
         },
         IS_AUTH(state, event) {
-            state.isAutenticated = event.isAutenticated
+            state.isAutenticated = event.isAutenticated;
         },
         LOGOUT(state, event) {
-            state.isAutenticated = event.isAutenticated
+            state.isAutenticated = event.isAutenticated;
         }
     },
     actions: {
         // reminder: syncronous or asyncronous
         setEmail({ commit }, event) {
-            window.localStorage.setItem('saveEmail', event.email)
+            window.localStorage.setItem('saveEmail', event.email);
             commit('SET_EMAIL', event);
         },
         authUser({commit}, event) {
-            window.localStorage.setItem('authUser', true)
-            commit('IS_AUTH', event)
+            window.localStorage.setItem('authUser', true);
+            commit('IS_AUTH', event);
         },
         logout({commit}, event) {
-            commit('LOGOUT', event)
+            window.localStorage.clear();
+            commit('LOGOUT', event);
         }
     },
     getters: {
-        userEmail(state) {
-            return state.userData.email
-        },
-        authUser(state) {
-            return state.isAutenticated
-        }
+
     }
 })

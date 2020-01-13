@@ -13,25 +13,19 @@
 
 <script>
 
-//import { mapGetters } from 'vuex'
-
 export default {
     name: 'Welcome',
     data: () => ({
         currentUser: ''
     }),
-    // computed: {
-    //     ...mapGetters(['userEmail'])
-    // },
     mounted() {
         let fromLocalStorage = window.localStorage.getItem('saveEmail');
-        this.currentUser = fromLocalStorage
+        this.currentUser = fromLocalStorage;
     },
     methods: {
         logout() {
-            window.localStorage.clear()
+            this.$store.dispatch('logout', {isAutenticated: false});
             this.$router.replace('login');
-            this.$store.dispatch('logout', {isAutenticated: false})
         }
     }
 }

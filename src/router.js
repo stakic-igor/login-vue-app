@@ -42,8 +42,8 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    let loginPage = ['/login']
-    let isAutenticated = store.state.isAutenticated || window.localStorage.getItem('authUser')
+    let loginPage = ['/login'];
+    let isAutenticated = store.state.isAutenticated || window.localStorage.getItem('authUser');
     if (to.path == loginPage && isAutenticated) {
       return next('/welcome')
     }

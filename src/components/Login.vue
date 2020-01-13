@@ -27,8 +27,8 @@
                         v-model="checkbox"
                         label="Remember me"
                     ></v-checkbox>
-                    <v-layout row wrap justify-space-between>
-                        <v-flex>
+                    <v-layout row wrap>
+                        <v-flex class="text-md-left">
                             <v-btn
                                 color="error"
                                 @click="reset"
@@ -36,13 +36,22 @@
                             Reset
                             </v-btn>
                         </v-flex>
-                        <v-flex xs12 md6>
+                        <v-flex xs12 md6 class="text-md-right">
                             <v-btn
                                 :disabled='!valid'
                                 color="success"
                                 @click="onSubmit"
                             >
                             Log In
+                            </v-btn>
+                        </v-flex>
+                    </v-layout>
+                    <v-layout row wrap class="mt-6">
+                        <v-flex xs12 class="text-md-center">
+                            <v-btn
+                                @click="onShowDetails"
+                            >
+                            Forgot email or password
                             </v-btn>
                         </v-flex>
                     </v-layout>
@@ -118,9 +127,11 @@ export default {
                 let now = new Date();
                 now.setTime(now.getTime() + 1 * 3600 * 1000);
                 document.cookie = tokenName + '=' + data.token + "; expires="+ now.toUTCString() + "; path=/";
-
                 this.isLoading = false;
             })
+        },
+        onShowDetails() {
+            alert('Please use this email: eve.holt@reqres.in. For password type any character')
         }
     }
 }
