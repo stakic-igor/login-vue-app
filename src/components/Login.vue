@@ -28,6 +28,7 @@
                         <v-checkbox
                             v-model="checkbox"
                             label="Remember me"
+                            @change="check($event)"
                         ></v-checkbox>
 
                         <v-btn
@@ -52,9 +53,6 @@
 </template>
 
 <script>
-
-import { EventBus } from '../event-bus';
-
 
 export default {
     name: 'Login',
@@ -81,6 +79,9 @@ export default {
         ],
     }),
     methods: {
+        check() {
+            alert('checked')
+        },
         reset() {
             //this.$refs.form.reset()
             this.email = '';
@@ -89,8 +90,6 @@ export default {
             this.$refs.form.resetValidation();
         },
         submit() {
-            EventBus.$emit('clicked', 'someValue')
-
             this.t = true;
             this.isLoading = true;
             let n = 'x-auth-token';
@@ -119,6 +118,7 @@ export default {
                 }
             })
             .then(data => {
+                this.$store.dispatch('setEmail',{email: this.email})
                 document.cookie = n + '=' + data.token;
                 this.$router.push('welcome');
                 this.isLoading = false;

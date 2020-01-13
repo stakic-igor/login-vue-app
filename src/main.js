@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
+import { store } from './store';
 import VueRouter from 'vue-router';
 import vuetify from './plugins/vuetify';
 import Login from './components/Login';
@@ -18,10 +19,11 @@ const router = new VueRouter({
     mode: 'history'
 })
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 new Vue({
     vuetify,
+    store,
     router,
     render: h => h(App)
 }).$mount('#app')
