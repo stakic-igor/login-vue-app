@@ -13,33 +13,28 @@ export const store =  new Vuex.Store({
         }
     },
     mutations: {
+        // reminder: always syncronous
         SET_EMAIL(state, event) {
             state.userData.email = event.email;
         },
         IS_AUTH(state, event) {
             state.isAutenticated = event.isAutenticated
         },
-        LOGIN(state, event) {
-            state.userData.email = event.email;
-            //state.userData.password = event.password;
-        },
         LOGOUT(state, event) {
             state.isAutenticated = event.isAutenticated
         }
     },
     actions: {
+        // reminder: syncronous or asyncronous
         setEmail({ commit }, event) {
+            window.localStorage.setItem('saveEmail', event.email)
             commit('SET_EMAIL', event);
         },
         authUser({commit}, event) {
+            window.localStorage.setItem('authUser', true)
             commit('IS_AUTH', event)
         },
-        login({commit}, event) {
-
-            commit('LOGIN', event)
-        },
         logout({commit}, event) {
-
             commit('LOGOUT', event)
         }
     },

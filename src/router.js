@@ -43,9 +43,8 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     let loginPage = ['/login']
-    let savedEmail = window.localStorage.getItem('saveEmail')
     let isAutenticated = store.state.isAutenticated || window.localStorage.getItem('authUser')
-    if (to.path == loginPage && isAutenticated && savedEmail) {
+    if (to.path == loginPage && isAutenticated) {
       return next('/welcome')
     }
     else if (to.matched.some(route => route.meta.requiresAuth)) {
