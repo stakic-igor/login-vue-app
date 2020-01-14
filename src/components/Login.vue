@@ -12,7 +12,7 @@
                         :rules="emailRules"
                         label="E-mail"
                         required
-                        :disabled="disableField"
+                        :disabled="isDisableField"
                     ></v-text-field>
                     <v-text-field
                         v-model="password"
@@ -21,7 +21,7 @@
                         label="Password"
                         required
                         type="password"
-                        :disabled="disableField"
+                        :disabled="isDisableField"
                     ></v-text-field>
                     <v-checkbox
                         v-model="checkbox"
@@ -66,7 +66,7 @@
 export default {
     name: 'Login',
     data: () => ({
-        disableField: false,
+        isDisableField: false,
         checkbox: true,
         valid: false,
         password: '',
@@ -91,9 +91,10 @@ export default {
             this.$refs.form.resetValidation();
         },
         onSubmit() {
+            this.valid = false;
             // this could be set to store and dispatch action as well
             // it is set on this way just to demostrate different approach
-            this.disableField = true;
+            this.isDisableField = true;
             this.isLoading = true;
             let tokenName = 'x-auth-token';
             let url = 'https://reqres.in/api/login';
@@ -118,7 +119,7 @@ export default {
                     return  response.json()
                 } else {
                     this.reset();
-                    this.disableField = false;
+                    this.isDisableField = false;
                     this.isLoading = true;
                     this.loadingText = "Wrong user name or password! Please try again."
                 }
