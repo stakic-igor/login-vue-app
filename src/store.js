@@ -39,7 +39,4 @@ export const store =  new Vuex.Store({
             commit('LOGOUT', event);
         }
     },
-    getters: {
-
-    }
 })
