@@ -31,7 +31,7 @@
                         <v-flex class="text-md-left">
                             <v-btn
                                 color="error"
-                                @click="reset"
+                                @click="onReset"
                             >
                             Reset
                             </v-btn>
@@ -83,11 +83,12 @@ export default {
         ],
     }),
     methods: {
-        reset() {
+        onReset() {
             //this.$refs.form.reset()
             this.email = '';
             this.password = '';
             this.isLoading = false;
+            this.valid = true;
             this.$refs.form.resetValidation();
         },
         onSubmit() {
@@ -118,7 +119,7 @@ export default {
                     this.$router.replace('welcome');
                     return  response.json()
                 } else {
-                    this.reset();
+                    this.onReset();
                     this.isDisableField = false;
                     this.isLoading = true;
                     this.loadingText = "Wrong user name or password! Please try again."
