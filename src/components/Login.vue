@@ -88,7 +88,6 @@ export default {
             this.email = '';
             this.password = '';
             this.isLoading = false;
-            this.valid = true;
             this.$refs.form.resetValidation();
         },
         onSubmit() {
